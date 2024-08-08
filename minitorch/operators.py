@@ -70,7 +70,8 @@ def sigmoid(x: float) -> float:
 
     Calculate as
 
-    $f(x) =  \frac{1.0}{(1.0 + e^{-x})}$ if x >=0 else $\frac{e^x}{(1.0 + e^{x})}$
+    $f(x) =
+    \frac{1.0}{(1.0 + e^{-x})}$ if x >=0 else $\frac{e^x}{(1.0 + e^{x})}$
 
     for stability.
     """
@@ -135,7 +136,8 @@ def relu_back(x: float, d: float) -> float:
 # Small practice library of elementary higher-order functions.
 
 
-def map(fn: Callable[[float], float]) -> Callable[[Iterable[float]], Iterable[float]]:
+def map(fn: Callable[[float], float]) -> \
+            Callable[[Iterable[float]], Iterable[float]]:
     """
     Higher-order map.
 
@@ -145,8 +147,8 @@ def map(fn: Callable[[float], float]) -> Callable[[Iterable[float]], Iterable[fl
         fn: Function from one value to one value.
 
     Returns:
-         A function that takes a list, applies `fn` to each element, and returns a
-         new list
+         A function that takes a list, applies `fn` to each element, and
+         returns a new list
     """
     # TODO: Implement for Task 0.3.
     raise NotImplementedError("Need to implement for Task 0.3")
@@ -170,8 +172,8 @@ def zipWith(
         fn: combine two values
 
     Returns:
-         Function that takes two equally sized lists `ls1` and `ls2`, produce a new list by
-         applying fn(x, y) on each pair of elements.
+         Function that takes two equally sized lists `ls1` and `ls2`,
+         produce a new list by applying fn(x, y) on each pair of elements.
 
     """
     # TODO: Implement for Task 0.3.
