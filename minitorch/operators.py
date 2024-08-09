@@ -12,26 +12,74 @@ from typing import Callable, Iterable
 
 def mul(x: float, y: float) -> float:
     "$f(x, y) = x * y$"
+    """
+    Multiply two numbers together
+
+    Args:
+        x: float
+        y: float
+
+    Returns:
+        x * y
+    """
     return x * y
 
 
 def id(x: float) -> float:
     "$f(x) = x$"
+    """
+    Returns the value it takes in
+
+    Args:
+        x: float
+
+    Returns:
+        x
+    """
     return x
 
 
 def add(x: float, y: float) -> float:
     "$f(x, y) = x + y$"
+    """
+    Adds to numbers together
+
+    Args:
+        x: float
+        y: float
+
+    Returns:
+        x + y
+    """
     return x + y
 
 
 def neg(x: float) -> float:
     "$f(x) = -x$"
+    """
+    Negates a number
+
+    Args:
+        x: float
+
+    Returns:
+        -x
+    """
     return -x
 
 
 def lt(x: float, y: float) -> float:
     "$f(x) =$ 1.0 if x is less than y else 0.0"
+    """
+    Checks if first arg is less than second args
+
+    Args:
+        x: float
+        y: float
+
+    Returns:
+        x < y as a float, 1.0/0 represting true/false
+    """
     if x < y:
         return 1.0
     else:
@@ -40,6 +88,16 @@ def lt(x: float, y: float) -> float:
 
 def eq(x: float, y: float) -> float:
     "$f(x) =$ 1.0 if x is equal to y else 0.0"
+    """
+    Checks if first arg is equal to the second arg
+
+    Args:
+        x: float
+        y: float
+
+    Returns:
+        x == y as 1.0/0.0 representing true/false
+    """
     if x == y:
         return 1.0
     else:
@@ -48,6 +106,16 @@ def eq(x: float, y: float) -> float:
 
 def max(x: float, y: float) -> float:
     "$f(x) =$ x if x is greater than y else y"
+    """
+    Determines max of two values
+
+    Args:
+        x: float
+        y: float
+
+    Returns:
+        x if x > y else y
+    """
     if x > y:
         return x
     else:
@@ -56,6 +124,16 @@ def max(x: float, y: float) -> float:
 
 def is_close(x: float, y: float) -> float:
     "$f(x) = |x - y| < 1e-2$"
+    """
+    Checks almost equal of two floats
+
+    Args:
+        x: float
+        y: float
+
+    Returns:
+        |x - y| < 1e-2
+    """
     if abs(x - y) < 1e-2:
         return 1.0
     else:
@@ -74,9 +152,15 @@ def sigmoid(x: float) -> float:
     \frac{1.0}{(1.0 + e^{-x})}$ if x >=0 else $\frac{e^x}{(1.0 + e^{x})}$
 
     for stability.
+
+    Calculates sigmoid(x)
+
+    Args:
+        x: float
+
+    Returns:
+        sigmoid(x)
     """
-    # TODO: Implement for Task 0.1.
-    # raise NotImplementedError('Need to implement for Task 0.1')
     if x >= 0:
         return 1.0 / (1.0 + exp(-x))
     else:
@@ -88,6 +172,14 @@ def relu(x: float) -> float:
     $f(x) =$ x if x is greater than 0, else 0
 
     (See https://en.wikipedia.org/wiki/Rectifier_(neural_networks) .)
+
+    Calculates relu(x)
+
+    Args:
+        x: float
+
+    Returns:
+        relu(x)
     """
     if x > 0.0:
         return x
@@ -100,31 +192,95 @@ EPS = 1e-6
 
 def log(x: float) -> float:
     "$f(x) = log(x)$"
+    """
+    Calculates log(x)
+
+    Args:
+        x: float
+
+    Returns:
+        log(x)
+    """
     return math.log(x + EPS)
 
 
 def exp(x: float) -> float:
     "$f(x) = e^{x}$"
+    """
+    Calculates exp(x)
+
+    Args:
+        x: float
+
+    Returns:
+        exp(x)
+    """
     return math.exp(x)
 
 
 def log_back(x: float, d: float) -> float:
     r"If $f = log$ as above, compute $d \times f'(x)$"
+    """
+    Calculates the derivative of log scaled by d
+
+    Args:
+        x: float
+        d: float
+
+    Returns:
+        f(x) = log(x)
+
+        log_back(x, d) = d * f'(x)
+    """
     return d * inv(x)
 
 
 def inv(x: float) -> float:
     "$f(x) = 1/x$"
+    """
+    Calculates 1/x
+
+    Args:
+        x: float
+
+    Returns:
+        1/x
+    """
     return 1 / x
 
 
 def inv_back(x: float, d: float) -> float:
     r"If $f(x) = 1/x$ compute $d \times f'(x)$"
+    """
+    Calculates derivative of inverse scaled by d
+
+    Args:
+        x: float
+        d: float
+
+    Returns:
+        f(x) = 1/x
+
+        inv_back(x, d) = d * f'(x)
+
+    """
     return d * inv(x) ** 2
 
 
 def relu_back(x: float, d: float) -> float:
     r"If $f = relu$ compute $d \times f'(x)$"
+    """
+    Calculates derivative of relu(x) scaled by d
+
+    Args:
+        x: float
+        d: float
+
+    Returns:
+        f(x) = relu(x)
+
+        relu_back(x, d) = d * f'(x)
+    """
     if x < 0:
         return 0.0
     else:
@@ -266,5 +422,14 @@ def sum(ls: Iterable[float]) -> float:
 
 def prod(ls: Iterable[float]) -> float:
     "Product of a list using `reduce` and `mul`."
+    """
+    Calculates the product of a list of numbers
+
+    Args:
+        ls: list of numbers
+
+    Returns:
+        Single value representing product of all elements in ls
+    """
     prod_fn = reduce(mul, start=1)
     return prod_fn(ls)
