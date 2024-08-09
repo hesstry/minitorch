@@ -2,7 +2,7 @@ from typing import Callable, List, Tuple
 
 import pytest
 from hypothesis import given
-from hypothesis.strategies import lists, floats
+from hypothesis.strategies import lists
 
 from minitorch import MathTest
 from minitorch.operators import (
@@ -33,8 +33,8 @@ from .strategies import assert_close, small_floats
 @pytest.mark.task0_1
 @given(small_floats, small_floats)
 def test_same_as_python(x: float, y: float) -> None:
-    '''Check that the main operators all return the same value of
-    the python version'''
+    """Check that the main operators all return the same value of
+    the python version"""
     assert_close(mul(x, y), x * y)
     assert_close(add(x, y), x + y)
     assert_close(neg(x), -x)
@@ -153,7 +153,7 @@ def test_distribute(a: float, b: float, c: float) -> None:
     Write a test that ensures that your operators distribute, i.e.
     :math:`z \times (x + y) = z \times x + z \times y`
     """
-    assert_close(a * (b + c), a*b + a*c)
+    assert_close(a * (b + c), a * b + a * c)
 
 
 @pytest.mark.task0_2

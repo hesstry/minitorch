@@ -137,7 +137,7 @@ def relu_back(x: float, d: float) -> float:
 
 
 def map(fn: Callable[[float], float]) -> \
-            Callable[[Iterable[float]], Iterable[float]]:
+        Callable[[Iterable[float]], Iterable[float]]:
     """
     Higher-order map.
 
@@ -150,26 +150,26 @@ def map(fn: Callable[[float], float]) -> \
          A function that takes a list, applies `fn` to each element, and
          returns a new list
     """
+
     def apply(ls: Iterable[float]):
         new_ls = []
         for e in ls:
             e_prime = fn(e)
             new_ls.append(e_prime)
         return new_ls
-    
     return apply
 
 
 def negList(ls: Iterable[float]) -> Iterable[float]:
     "Use `map` and `neg` to negate each element in `ls`"
-    '''
+    """
     Negates every element in a list
 
     Args:
         ls: a list of floats
     Returns:
-        new_ls with new_ls[i] = -ls[i] 
-    '''
+        new_ls with new_ls[i] = -ls[i]
+    """
     neg_map = map(neg)
     return neg_map(ls)
 
@@ -190,8 +190,11 @@ def zipWith(
          produce a new list by applying fn(x, y) on each pair of elements.
 
     """
+
     def apply(ls1, ls2):
-        assert len(ls1) == len(ls2), f"Need to be same size, \
+        assert len(ls1) == len(
+            ls2
+        ), f"Need to be same size, \
                                     {len(ls1)} != {len(ls2)}"
         new_ls = []
 
@@ -200,13 +203,13 @@ def zipWith(
             new_ls.append(new_e)
 
         return new_ls
-    
+
     return apply
 
 
 def addLists(ls1: Iterable[float], ls2: Iterable[float]) -> Iterable[float]:
     "Add the elements of `ls1` and `ls2` using `zipWith` and `add`"
-    '''
+    """
     Element-wise add for two lists of integers
 
     Args:
@@ -215,7 +218,7 @@ def addLists(ls1: Iterable[float], ls2: Iterable[float]) -> Iterable[float]:
 
     Returns:
         New list, ls, where ls[i] = ls1[i] + ls2[i]
-    '''
+    """
     list_add_map = zipWith(add)
     return list_add_map(ls1, ls2)
 
@@ -235,19 +238,20 @@ def reduce(
         $x_1 \ldots x_n$ and computes the reduction :math:`fn(x_3, fn(x_2,
         fn(x_1, x_0)))`
     """
+
     def apply(ls):
         res = start
         for e in ls:
             res = fn(e, res)
 
         return res
-    
+
     return apply
 
 
 def sum(ls: Iterable[float]) -> float:
     "Sum up a list using `reduce` and `add`."
-    '''
+    """
     Sum of list of floats
 
     Args:
@@ -255,7 +259,7 @@ def sum(ls: Iterable[float]) -> float:
 
     Returns:
         A single value denoting the sum of ls
-    '''
+    """
     sum_fn = reduce(add, start=0)
     return sum_fn(ls)
 
