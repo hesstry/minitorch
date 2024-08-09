@@ -150,14 +150,28 @@ def map(fn: Callable[[float], float]) -> \
          A function that takes a list, applies `fn` to each element, and
          returns a new list
     """
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    def apply(ls: Iterable[float]):
+        new_ls = []
+        for e in ls:
+            e_prime = fn(e)
+            new_ls.append(e_prime)
+        return new_ls
+    
+    return apply
 
 
 def negList(ls: Iterable[float]) -> Iterable[float]:
     "Use `map` and `neg` to negate each element in `ls`"
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    '''
+    Negates every element in a list
+
+    Args:
+        ls: a list of floats
+    Returns:
+        new_ls with new_ls[i] = -ls[i] 
+    '''
+    neg_map = map(neg)
+    return neg_map(ls)
 
 
 def zipWith(
@@ -176,14 +190,34 @@ def zipWith(
          produce a new list by applying fn(x, y) on each pair of elements.
 
     """
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    def apply(ls1, ls2):
+        assert len(ls1) == len(ls2), f"Need to be same size, \
+                                    {len(ls1)} != {len(ls2)}"
+        new_ls = []
+
+        for e1, e2 in zip(ls1, ls2):
+            new_e = fn(e1, e2)
+            new_ls.append(new_e)
+
+        return new_ls
+    
+    return apply
 
 
 def addLists(ls1: Iterable[float], ls2: Iterable[float]) -> Iterable[float]:
     "Add the elements of `ls1` and `ls2` using `zipWith` and `add`"
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    '''
+    Element-wise add for two lists of integers
+
+    Args:
+        ls1: list of integers
+        ls2: list of integers
+
+    Returns:
+        New list, ls, where ls[i] = ls1[i] + ls2[i]
+    '''
+    list_add_map = zipWith(add)
+    return list_add_map(ls1, ls2)
 
 
 def reduce(
@@ -197,21 +231,36 @@ def reduce(
         start: start value $x_0$
 
     Returns:
-         Function that takes a list `ls` of elements
-         $x_1 \ldots x_n$ and computes the reduction :math:`fn(x_3, fn(x_2,
-         fn(x_1, x_0)))`
+        Function that takes a list `ls` of elements
+        $x_1 \ldots x_n$ and computes the reduction :math:`fn(x_3, fn(x_2,
+        fn(x_1, x_0)))`
     """
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    def apply(ls):
+        res = start
+        for e in ls:
+            res = fn(e, res)
+
+        return res
+    
+    return apply
 
 
 def sum(ls: Iterable[float]) -> float:
     "Sum up a list using `reduce` and `add`."
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    '''
+    Sum of list of floats
+
+    Args:
+        ls: list of floats
+
+    Returns:
+        A single value denoting the sum of ls
+    '''
+    sum_fn = reduce(add, start=0)
+    return sum_fn(ls)
 
 
 def prod(ls: Iterable[float]) -> float:
     "Product of a list using `reduce` and `mul`."
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    prod_fn = reduce(mul, start=1)
+    return prod_fn(ls)
