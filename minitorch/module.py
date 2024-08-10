@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Any, Dict, Optional, Sequence, Tuple
 
+from collections import deque
+
 
 class Module:
     """
@@ -28,32 +30,99 @@ class Module:
         "Return the direct child modules of this module."
         m: Dict[str, Module] = self.__dict__["_modules"]
         return list(m.values())
+    
+    def named_children(self) -> Sequence[Tuple[str, Module]]:
+        """
+        Return the names of the children of this module and
+        the modules themselves
+        """
+        m: Dict[str, Module] = self.__dict__["_modules"]
+        to_return = [(name, mod) for name, mod in m.items()]
+        return to_return
 
     def train(self) -> None:
-        "Set the mode of this module and all descendent modules to `train`."
-        # TODO: Implement for Task 0.4.
-        raise NotImplementedError('Need to implement for Task 0.4')
+        """
+        Set the mode of this module and all descendent modules to `train`.
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        # # TODO: Implement for Task 0.4.
+        # raise NotImplementedError("Need to implement for Task 0.4")
+        """
+        I'm assuming it propogates training to every child node?
+        Not sure why we would wish to propogate it, but for now I won't
+        question.
+
+        Propogate down through the tree. 
+
+        Keep a list of to_visit, and ensure this is never empty
+        """
+        self.training = True
+        to_set = deque(self.modules())
+        while len(to_set) > 0:
+            mChild = to_set.popleft()
+            mChild.training = True
+            to_set.extend(mChild.modules())
 
     def eval(self) -> None:
         "Set the mode of this module and all descendent modules to `eval`."
-        # TODO: Implement for Task 0.4.
-        raise NotImplementedError('Need to implement for Task 0.4')
+        self.training = False
+        to_set = deque(self.modules())
+        while len(to_set) > 0:
+            mChild = to_set.popleft()
+            mChild.training = False
+            to_set.extend(mChild.modules())
 
     def named_parameters(self) -> Sequence[Tuple[str, Parameter]]:
         """
         Collect all the parameters of this module and its descendents.
-
-
         Returns:
             The name and `Parameter` of each ancestor parameter.
         """
-        # TODO: Implement for Task 0.4.
-        raise NotImplementedError('Need to implement for Task 0.4')
+        self_params: Dict[str, Parameter] = self.__dict__["_parameters"]
+        params = [(n, p) for n, p in self_params.items()]
+
+        to_add = deque(self.named_children())
+        while len(to_add) > 0:
+            name, mChild = to_add.popleft()
+            mChild_params: Dict[str, Parameter] = mChild.__dict__["_parameters"]
+
+            for n, p in mChild_params.items():
+                params.append((f'{name}.{n}', p))
+
+            extended_names = []
+            for n, m in mChild.named_children():
+                n = f"{name}.{n}"
+                extended_names.append((n, m))
+
+            to_add.extend(extended_names)
+
+        return params
 
     def parameters(self) -> Sequence[Parameter]:
-        "Enumerate over all the parameters of this module and its descendents."
-        # TODO: Implement for Task 0.4.
-        raise NotImplementedError('Need to implement for Task 0.4')
+        """
+        Enumerate over all the parameters of this module and its descendents.
+        
+        Returns:
+            A list of all parameters from this module and its descendents
+        """
+        self_params: Dict[str, Parameter] = self.__dict__["_parameters"]
+        params = [param for param in self_params.values()]
+        to_add = deque(self.modules())
+
+        while len(to_add) > 0:
+            mChild = to_add.popleft()
+            mChild_params: Dict[str, Parameter] = mChild.__dict__["_parameters"]
+
+            for p in mChild_params.values():
+                params.append(p)
+
+            to_add.extend(mChild.modules())
+
+        return params
 
     def add_parameter(self, k: str, v: Any) -> Parameter:
         """
