@@ -30,7 +30,7 @@ class Module:
         "Return the direct child modules of this module."
         m: Dict[str, Module] = self.__dict__["_modules"]
         return list(m.values())
-    
+
     def named_children(self) -> Sequence[Tuple[str, Module]]:
         """
         Return the names of the children of this module and
@@ -91,7 +91,7 @@ class Module:
             mChild_params: Dict[str, Parameter] = mChild.__dict__["_parameters"]
 
             for n, p in mChild_params.items():
-                params.append((f'{name}.{n}', p))
+                params.append((f"{name}.{n}", p))
 
             extended_names = []
             for n, m in mChild.named_children():
@@ -105,7 +105,7 @@ class Module:
     def parameters(self) -> Sequence[Parameter]:
         """
         Enumerate over all the parameters of this module and its descendents.
-        
+
         Returns:
             A list of all parameters from this module and its descendents
         """

@@ -292,8 +292,7 @@ def relu_back(x: float, d: float) -> float:
 # Small practice library of elementary higher-order functions.
 
 
-def map(fn: Callable[[float], float]) -> \
-        Callable[[Iterable[float]], Iterable[float]]:
+def map(fn: Callable[[float], float]) -> Callable[[Iterable[float]], Iterable[float]]:
     """
     Higher-order map.
 
@@ -313,6 +312,7 @@ def map(fn: Callable[[float], float]) -> \
             e_prime = fn(e)
             new_ls.append(e_prime)
         return new_ls
+
     return apply
 
 
