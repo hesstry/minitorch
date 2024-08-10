@@ -35,6 +35,9 @@ class Module:
         """
         Return the names of the children of this module and
         the modules themselves
+
+        Returns:
+            [(name, ChildModule) for all name, child in self]
         """
         m: Dict[str, Module] = self.__dict__["_modules"]
         to_return = [(name, mod) for name, mod in m.items()]
@@ -43,22 +46,6 @@ class Module:
     def train(self) -> None:
         """
         Set the mode of this module and all descendent modules to `train`.
-        Args:
-            None
-
-        Returns:
-            None
-        """
-        # # TODO: Implement for Task 0.4.
-        # raise NotImplementedError("Need to implement for Task 0.4")
-        """
-        I'm assuming it propogates training to every child node?
-        Not sure why we would wish to propogate it, but for now I won't
-        question.
-
-        Propogate down through the tree. 
-
-        Keep a list of to_visit, and ensure this is never empty
         """
         self.training = True
         to_set = deque(self.modules())
