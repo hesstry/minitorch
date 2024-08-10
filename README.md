@@ -14,13 +14,3 @@ To access the autograder:
 
 ### Module 0
 * Check completion of Module 0 using: ```bash test_module_0.sh```
-
-#### Images from task0_5
-
-![plot](./imgs/task0_5_data0.png)
-
-![plot](./imgs/task0_5_data0_sol.png)
-
-![plot](./imgs/task0_5_params.png)
-
-![alt text](imgs/task_0_5_data0.png) ![alt text](imgs/task_0_5_data0.png) ![alt text](imgs/task_0_5_data0.png)
